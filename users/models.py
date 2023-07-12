@@ -1,4 +1,5 @@
 from sqlalchemy import Boolean, Column, Integer, String, ForeignKey
+from sqlalchemy.orm import relationship
 from config.db.database_config import Base
 
 
@@ -13,3 +14,5 @@ class Users(Base):
     hashed_password = Column(String)
     is_active = Column(Boolean, default=True)
     phone_number = Column(String)
+
+    todos = relationship('Todos', back_populates='owner')
