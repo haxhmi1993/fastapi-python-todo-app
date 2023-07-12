@@ -1,6 +1,7 @@
 from fastapi import FastAPI
 from config.db.database_config import get_db
 import logging
+from todos.router import router as TodoRouter
 
 
 # App Instance
@@ -9,6 +10,9 @@ app = FastAPI()
 # Logger setup
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
+
+# Routes Conf
+app.include_router(TodoRouter)
 
 
 # DB Conf
