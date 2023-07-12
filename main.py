@@ -3,6 +3,7 @@ from config.db.database_config import get_db
 import logging
 from todos.router import router as TodoRouter
 from users.router import router as UserRouter
+from auth.router import router as AuthRouter
 
 
 # App Instance
@@ -15,6 +16,7 @@ logger = logging.getLogger(__name__)
 # Routes Conf
 app.include_router(TodoRouter)
 app.include_router(UserRouter)
+app.include_router(AuthRouter)
 
 
 # DB Conf
