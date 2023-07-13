@@ -1,15 +1,13 @@
 from fastapi import APIRouter, Depends
-from .schemas.user import CreateUser
+from .schemas.user import AuthUser
 from config.db.database_config import get_db
 from sqlalchemy.orm import Session
 from users.models import Users
-from common.responses.responses import success_response
-from .context.bcrypt import get_password_hash
+from common.responses import success_response
+from .utils import get_password_hash, authenticate_user, create_access_token
 from fastapi.security import OAuth2PasswordRequestForm
-from .context.authenticate import authenticate_user
 from datetime import timedelta
-from .exceptions.token_exception import token_exception
-from .context.token_generate import create_access_token
+from .exceptions import token_exception
 
 
 router = APIRouter(
@@ -20,7 +18,7 @@ router = APIRouter(
 
 
 @router.post("/create/user")
-async def create_new_user(create_user: CreateUser, db: Session = Depends(get_db)):
+async def create_new_user(create_user: AuthUser, db: Session = Depends(get_db)):
     create_user_model = Users(**create_user.model_dump())
     create_user_model.hashed_password = get_password_hash(
         create_user.hashed_password)

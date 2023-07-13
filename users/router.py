@@ -2,12 +2,11 @@ from fastapi import Depends, APIRouter
 from sqlalchemy.orm import Session
 from .models import Users
 from config.db.database_config import get_db
-from common.exceptions.httpexception import http_exception
+from common.exceptions import http_exception
 from .schemas.user_verification import UserVerification
-from auth.exceptions.user_exception import get_user_exception
-from auth.context.current_user import get_current_user
-from auth.context.bcrypt import get_password_hash, verify_password
-from common.responses.responses import success_response, invalid_request_response
+from auth.exceptions import get_user_exception
+from auth.utils import get_current_user, verify_password, get_password_hash
+from common.responses import success_response, invalid_request_response
 
 
 router = APIRouter(
