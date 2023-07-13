@@ -2,12 +2,12 @@ from fastapi import Depends, APIRouter
 from sqlalchemy.orm import Session
 from config.db.database_config import get_db
 from .models import Todos
-from common.responses.responses import success_response
-from common.exceptions.httpexception import http_exception
+from common.responses import success_response
+from common.exceptions import http_exception
 from .schemas.todo import Todo
 from .schemas.todo_update import UpdateTodo
-from auth.context.current_user import get_current_user
-from auth.exceptions.user_exception import get_user_exception
+from auth.utils import get_current_user
+from auth.exceptions import get_user_exception
 
 
 router = APIRouter(
@@ -73,4 +73,4 @@ async def delete_todo(todo_id: int, user: dict = Depends(get_current_user), db: 
     db.query(Todos).filter(Todos.id == todo_id).delete()
     db.commit()
 
-    return success_response(200)
+    return todo_model
