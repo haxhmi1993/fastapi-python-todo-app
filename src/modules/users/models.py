@@ -1,6 +1,7 @@
 from sqlalchemy import Boolean, Column, Integer, String, ForeignKey
 from sqlalchemy.orm import relationship
 from config.db.database_config import Base
+from modules.messaging.models import group_user_association
 
 
 class Users(Base):
@@ -16,3 +17,9 @@ class Users(Base):
     phone_number = Column(String)
 
     todos = relationship('Todos', back_populates='owner')
+    chat_groups = relationship(
+        'Groups', secondary=group_user_association, back_populates='joined_users')
+    sent_messages = relationship(
+        'Messages', foreign_keys='Messages.sender_id', back_populates='sender')
+    received_messages = relationship(
+        'Messages', foreign_keys='Messages.receiver_id', back_populates='receiver')
