@@ -8,3 +8,8 @@ class AuthUser(BaseModel):
     last_name: str
     hashed_password: str
     is_active: bool
+
+
+class LoginUser(BaseModel):
+    username: str
+    password: str

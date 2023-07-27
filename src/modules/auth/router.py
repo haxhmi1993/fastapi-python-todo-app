@@ -1,11 +1,10 @@
 from fastapi import APIRouter, Depends
-from .schemas.user import AuthUser
+from .schemas.user import AuthUser, LoginUser
 from config.db.database_config import get_db
 from sqlalchemy.orm import Session
 from modules.users.models import Users
 from modules.common.responses import success_response
 from .utils import get_password_hash, authenticate_user, create_access_token
-from fastapi.security import OAuth2PasswordRequestForm
 from datetime import timedelta
 from .exceptions import token_exception
 
@@ -28,7 +27,7 @@ async def create_new_user(create_user: AuthUser, db: Session = Depends(get_db)):
 
 
 @router.post("/login")
-async def login_for_access_token(form_data: OAuth2PasswordRequestForm = Depends(),
+async def login_for_access_token(form_data: LoginUser,
                                  db: Session = Depends(get_db)):
     user = authenticate_user(form_data.username, form_data.password, db)
     if not user:

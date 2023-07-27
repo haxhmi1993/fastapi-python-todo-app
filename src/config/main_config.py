@@ -11,6 +11,10 @@ class Settings(BaseSettings):
     APP_PORT: int
     SECRET_KEY: str
     ALGORITHM: str
+    PUSHER_APP_ID: str
+    PUSHER_KEY: str
+    PUSHER_SECRET: str
+    PUSHER_CLUSTER: str
 
     model_config = SettingsConfigDict(env_file='.env')
 
